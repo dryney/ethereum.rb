@@ -263,6 +263,7 @@ module Ethereum
         def_delegator :parent, :new_filter_proxy, :new_filter
         def_delegator :parent, :get_filter_logs_proxy, :get_filter_logs
         def_delegator :parent, :get_filter_change_proxy, :get_filter_changes
+        def_delegator :parent, :default_block
         define_method :parent do
           parent
         end
