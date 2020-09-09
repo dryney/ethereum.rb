@@ -3,11 +3,9 @@ require 'forwardable'
 module Ethereum
   class Contract
 
-    attr_accessor :default_block
-
     attr_reader :address
     attr_accessor :key
-    attr_accessor :gas_limit, :gas_price, :nonce
+    attr_accessor :gas_limit, :gas_price, :nonce, :default_block
     attr_accessor :code, :name, :abi, :class_object, :sender, :deployment, :client
     attr_accessor :events, :functions, :constructor_inputs
     attr_accessor :call_raw_proxy, :call_proxy, :transact_proxy, :transact_and_wait_proxy
@@ -252,7 +250,7 @@ module Ethereum
         extend Forwardable
         def_delegators :parent, :deploy_payload, :deploy_args, :call_payload, :call_args
         def_delegators :parent, :signed_deploy, :key, :key=
-        def_delegators :parent, :gas_limit, :gas_price, :gas_limit=, :gas_price=, :nonce, :nonce=
+        def_delegators :parent, :gas_limit, :gas_price, :gas_limit=, :gas_price=, :nonce, :nonce=, :default_block, :default_block=
         def_delegators :parent, :abi, :deployment, :events
         def_delegators :parent, :estimate, :deploy, :deploy_and_wait
         def_delegators :parent, :address, :address=, :sender, :sender=
@@ -263,7 +261,6 @@ module Ethereum
         def_delegator :parent, :new_filter_proxy, :new_filter
         def_delegator :parent, :get_filter_logs_proxy, :get_filter_logs
         def_delegator :parent, :get_filter_change_proxy, :get_filter_changes
-        def_delegator :parent, :default_block
         define_method :parent do
           parent
         end
