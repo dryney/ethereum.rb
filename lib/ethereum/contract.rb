@@ -10,7 +10,7 @@ module Ethereum
     attr_accessor :events, :functions, :constructor_inputs
     attr_accessor :call_raw_proxy, :call_proxy, :transact_proxy, :transact_and_wait_proxy
     attr_accessor :new_filter_proxy, :get_filter_logs_proxy, :get_filter_change_proxy
-
+    attr_accessor :default_block
     def initialize(name, code, abi, client = Ethereum::Singleton.instance)
       @name = name
       @code = code
@@ -167,7 +167,9 @@ module Ethereum
     end
 
     def call_args(fun, args)
-      add_gas_options_args({to: @address, from: @sender, data: call_payload(fun, args)})
+      params = {to: @address, from: @sender, data: call_payload(fun, args)}
+      params.merge!({default_block: @default_block}) if @default_block.present?
+      add_gas_options_args(params)
     end
 
     def call_raw(fun, *args)
